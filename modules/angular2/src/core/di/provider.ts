@@ -646,7 +646,11 @@ function _extractToken(typeOrFunc, metadata /*any[] | any*/, params: any[][]): D
   var optional = false;
 
   if (!isArray(metadata)) {
-    return _createDependency(metadata, optional, null, null, depProps);
+    if (metadata instanceof InjectMetadata) {
+      return _createDependency(metadata.token, optional, null, null, depProps);
+    } else {
+      return _createDependency(metadata, optional, null, null, depProps);
+    }
   }
 
   var lowerBoundVisibility = null;
